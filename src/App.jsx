@@ -5,6 +5,7 @@ import Bollar from './Bollar';
 import Counter from './Counter';
 import Users from './Users';
 import Friends from './Friends';
+import Comments from './Comments';
 
 const fetchUsers = fetch("https://jsonplaceholder.typicode.com/users")
   .then(res => res.json())
@@ -14,7 +15,13 @@ const fetchFriends = async () => {
   return res.json();
 }
 
+const fetchComments = async() => {
+  const res = await fetch("https://jsonplaceholder.typicode.com/comments");
+  return res.json();
+}
 function App() {
+  const commentPromise = fetchComments();
+  console.log(commentPromise)
 
   function handleClick() {
     alert('Normal Function');
@@ -34,9 +41,13 @@ function App() {
     <>
       <h3>Vite + React</h3>
 
-      <Suspense fallback={<h3>Friend Lists Loading . . .</h3>}>
-        <Friends friendsPromise={friendsPromise}></Friends>
+      <Suspense fallback={<h3>Comments are coming........</h3>}>
+        <Comments commentPromise={commentPromise}></Comments>
       </Suspense>
+
+      {/* <Suspense fallback={<h3>Friend Lists Loading . . .</h3>}>
+        <Friends friendsPromise={friendsPromise}></Friends>
+      </Suspense> */}
 
       {/* <Suspense fallback={<h3>Loading...</h3>}>
         <Users fetchUsers={fetchUsers}></Users>
